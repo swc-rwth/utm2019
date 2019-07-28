@@ -3,21 +3,16 @@ pipeline {
         label "master"
     }
     tools {
-        maven 'M3'
+        maven 'maven'
     }
 
     stages {
         stage( 'Setup & Prepare') {
             steps {
-                git url: 'https://github.com/swc-rwth/utm2018-spring-boot.git', branch: 'master'
+                git url: 'https://github.com/swc-rwth/utm2019.git', branch: 'master'
             }
         }
 
-        stage("Build and Test") {
-            steps {
-                sh "mvn -B clean package -DskipTests=true"
-            }
-        }
         stage("Build w/o Test") {
             steps {
                 sh "mvn -B clean package -DskipTests=true"
@@ -27,6 +22,12 @@ pipeline {
         stage("Test") {
             steps {
                 sh "mvn -B test"
+            }
+        }
+
+        stage("Docker Build") {
+            steps {
+                sh "mvn -B docker:build"
             }
         }
     }
