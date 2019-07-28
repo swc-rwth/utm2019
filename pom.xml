@@ -124,7 +124,7 @@
                         <image>
                             <name>swc/webservice</name>
                             <alias>webservice</alias>
-                            <registry>registry.docker.as-labs.com</registry>
+                            <registry>docker.as-labs.com</registry>
                             <build>
                                 <from>java:alpine</from>
                                 <ports>
