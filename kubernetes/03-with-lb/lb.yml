@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: swc-demo-lb
+  labels:
+    app: swc-demo
+    role: lb
+    tier: edge
+spec:
+  backend:
+    serviceName: swc-demo-service
+    servicePort: 8080

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: swc-demo-lb
+  labels:
+    app: swc-demo
+    role: lb
+    tier: edge
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - localhost
+    secretName: swc-tls
+  rules:
+  - http:
+      paths:
+      - path: /v2
+        backend:
+          serviceName: swc-demo-service
+          servicePort: 8080

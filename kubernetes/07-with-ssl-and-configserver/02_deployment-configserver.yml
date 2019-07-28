@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swc-config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swc-demo
+      role: config
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: swc-demo
+        role: config
+        tier: database
+    spec:
+      containers:
+      - name: configserver
+        image: registry.cloud.swc.rwth-aachen.de/swc/configservice:0.0.2
+        ports:
+        - containerPort: 8888
+      imagePullSecrets:
+      - name: swc-registry

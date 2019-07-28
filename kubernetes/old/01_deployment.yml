@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swc-demo
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: swc-demo
+      role: rest
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: swc-demo
+        role: rest
+        tier: backend
+    spec:
+      containers:
+      - name: admin
+        image: swc/webservice:0.1.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: default
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          periodSeconds: 1
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+

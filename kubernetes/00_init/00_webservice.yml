@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swc-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swc-demo
+      role: rest
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: swc-demo
+        role: rest
+        tier: backend
+    spec:
+      containers:
+      - name: admin
+        image: registry.cloud.swc.rwth-aachen.de/swc/webservice:0.2.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: default
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          periodSeconds: 1
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+      imagePullSecrets:
+      - name: swc-registry

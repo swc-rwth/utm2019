@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swc-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swc-demo
+      role: persistence
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: swc-demo
+        role: persistence
+        tier: database
+    spec:
+      containers:
+      - name: db
+        image: mysql:5.6
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_DATABASE
+          value: swc-demo
+        - name: MYSQL_PASSWORD
+          value: W5r5Hwde9xvVUh%
+        - name: MYSQL_ROOT_PASSWORD
+          value: W5r5Hwde9xvVUh%
+        - name: MYSQL_USER
+          value: demo
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: db-volume
+      volumes:
+      - name: db-volume
+        hostPath:
+          path: /Users/andy/kubernetesdata
+          type: Directory

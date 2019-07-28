@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swc-demo-consul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swc-demo
+  template:
+    metadata:
+      labels:
+        app: swc-demo
+    spec:
+      containers:
+      - name: consul
+        image: "consul:latest"
+        env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        command:
+        - "/bin/sh"
+        - "-ec"
+        - |
+          export CONSUL_HTTP_ADDR="${HOST_IP}:8500"
+          consul kv put hello kisters

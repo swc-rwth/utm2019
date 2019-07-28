@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: swc-lb
+  labels:
+    customer: swc
+    app: webservice
+    role: lb
+    tier: edge
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: swc-static
+spec:
+  tls:
+  - hosts:
+    - google.cloud.swc.rwth-aachen.de
+    secretName: swc-tls
+  backend:
+    serviceName: swc-service
+    servicePort: 8080

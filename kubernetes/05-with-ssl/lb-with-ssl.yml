@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: swc-demo-lb
+  labels:
+    app: swc-demo
+    role: lb
+    tier: edge
+spec:
+  tls:
+  - hosts:
+    - localhost
+    secretName: swc-tls
+  backend:
+    serviceName: swc-demo-service
+    servicePort: 8080
