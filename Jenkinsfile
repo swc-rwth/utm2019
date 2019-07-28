@@ -27,7 +27,7 @@ pipeline {
 
         stage("Docker Build") {
             steps {
-                sh "mvn -B docker:build"
+                sh "mvn -B --settings settings.xml docker:build docker:push"
             }
         }
     }
