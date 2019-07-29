@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wp-demo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wp-demo
+      role: db
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: wp-demo
+        role: db
+        tier: backend
+    spec:
+      containers:
+      - name: db
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_USER
+          value: utm
+        - name: MYSQL_PASSWORD
+          value: utm!
+        - name: MYSQL_DATABASE
+          value: wp
+        - name: MYSQL_RANDOM_ROOT_PASSWORD
+          value: '1'

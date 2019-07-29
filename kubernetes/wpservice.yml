@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wp-demo-wp-service
+  labels:
+    app: wp-demo
+    role: service
+    tier: backend
+spec:
+  selector:
+    app: wp-demo
+    role: cms
+    tier: backend
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: LoadBalancer 
